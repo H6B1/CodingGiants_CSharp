@@ -1,4 +1,6 @@
-﻿namespace GraSnake
+﻿using Raylib_cs;
+
+namespace GraSnake
 {
     public static class Program
     {
