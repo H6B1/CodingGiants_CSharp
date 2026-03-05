@@ -49,5 +49,10 @@ namespace GraSnake
 
             Raylib.CloseWindow();
         }
+
+        public void Aktualizuj()
+        {
+            
+        }
     }
 }
