@@ -6,7 +6,8 @@ namespace GraSnake
     public class Gra
     {
         private Waz waz;
-        
+        private Jedzenie jedzenie;
+
         private bool czyKoniecGry;
         private int szerokoscEkranu;
         private int wysokoscEkranu;
@@ -25,6 +26,7 @@ namespace GraSnake
             Raylib.SetTargetFPS(szybkosc);
 
             waz = new Waz(rozmiarSiatki, szerokoscEkranu, wysokoscEkranu);
+            jedzenie = new Jedzenie(rozmiarSiatki, szerokoscEkranu, wysokoscEkranu);
         }
 
         public void Aktualizuj()
@@ -75,6 +77,16 @@ namespace GraSnake
             }
 
             Raylib.CloseWindow();
+        }
+        public void UruchomPonownie()
+        {
+            punkty = 0;
+            szybkosc = 10;
+            waz = new Waz(rozmiarSiatki, szerokoscEkranu, wysokoscEkranu);
+            jedzenie = new Jedzenie(rozmiarSiatki, szerokoscEkranu, wysokoscEkranu);
+            czyKoniecGry = false;
+            
+            Raylib.SetTargetFPS(szybkosc);
         }
     }
 }
