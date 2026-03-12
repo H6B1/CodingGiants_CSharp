@@ -5,7 +5,7 @@ namespace GraSnake
 {
     public class Jedzenie
     {
-        public Vector2 Pozycja;  // w środku mamy tutaj int x, int y;
+        public Vector2 Pozycja {get; private set;}
         private int rozmiarSiatki;
         private int szerokoscEkranu;
         private int wysokoscEkranu;

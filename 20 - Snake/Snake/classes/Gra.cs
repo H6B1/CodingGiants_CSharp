@@ -40,6 +40,19 @@ namespace GraSnake
             if (Raylib.IsKeyPressed(KeyboardKey.Right))
                 waz.ZmienKierunek(new Vector2(1, 0));
 
+
+            if (waz.SprawdzKolizje(jedzenie.getPozycja()))
+            {
+                // change on objects
+                waz.Rosnij();
+                jedzenie.GenerujNowaPozycje();
+
+                // changes on gameplay
+                punkty++;
+                szybkosc = Math.Min(szybkosc++, 60);
+                Raylib.SetTargetFPS(szybkosc);
+            }
+
             waz.Poruszaj();
 
             if (waz.SprawdzKolizjeZeSoba())
@@ -54,6 +67,7 @@ namespace GraSnake
             Raylib.ClearBackground(Raylib_cs.Color.Black);
 
             waz.Rysuj();
+            jedzenie.Rysuj();
 
             Raylib.DrawText(punkty.ToString().PadLeft(2, '0'), 20, 20, 40, Raylib_cs.Color.White);
 
@@ -65,7 +79,6 @@ namespace GraSnake
 
             Raylib.EndDrawing();
         }
-
         public void Uruchom()
         {
             Inicjalizuj();
@@ -85,7 +98,7 @@ namespace GraSnake
             waz = new Waz(rozmiarSiatki, szerokoscEkranu, wysokoscEkranu);
             jedzenie = new Jedzenie(rozmiarSiatki, szerokoscEkranu, wysokoscEkranu);
             czyKoniecGry = false;
-            
+
             Raylib.SetTargetFPS(szybkosc);
         }
     }
