@@ -49,12 +49,17 @@ namespace GraSnake
             Vector2 zaktualizowanaGlowa = cialo[0];
             if (zaktualizowanaGlowa.X >= szerokoscEkranu)
                 zaktualizowanaGlowa.X = 0;
+
             if (zaktualizowanaGlowa.X < 0)
                 zaktualizowanaGlowa.X = szerokoscEkranu - rozmiarSiatki;
+
             if (zaktualizowanaGlowa.Y >= wysokoscEkranu)
                 zaktualizowanaGlowa.Y = 0;
+
             if (zaktualizowanaGlowa.Y < 0)
                 zaktualizowanaGlowa.Y = wysokoscEkranu - rozmiarSiatki;
+
+
             cialo[0] = zaktualizowanaGlowa;
         }
 

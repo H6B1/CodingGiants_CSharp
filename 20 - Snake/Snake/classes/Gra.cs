@@ -29,10 +29,14 @@ namespace GraSnake
 
         public void Aktualizuj()
         {
-            if (Raylib.IsKeyPressed(KeyboardKey.Up)) waz.ZmienKierunek(new Vector2(0, -1));
-            if (Raylib.IsKeyPressed(KeyboardKey.Down)) waz.ZmienKierunek(new Vector2(0, 1));
-            if (Raylib.IsKeyPressed(KeyboardKey.Left)) waz.ZmienKierunek(new Vector2(-1, 0));
-            if (Raylib.IsKeyPressed(KeyboardKey.Right)) waz.ZmienKierunek(new Vector2(1, 0));
+            if (Raylib.IsKeyPressed(KeyboardKey.Up))
+                waz.ZmienKierunek(new Vector2(0, -1));
+            if (Raylib.IsKeyPressed(KeyboardKey.Down))
+                waz.ZmienKierunek(new Vector2(0, 1));
+            if (Raylib.IsKeyPressed(KeyboardKey.Left))
+                waz.ZmienKierunek(new Vector2(-1, 0));
+            if (Raylib.IsKeyPressed(KeyboardKey.Right))
+                waz.ZmienKierunek(new Vector2(1, 0));
 
             waz.Poruszaj();
 
