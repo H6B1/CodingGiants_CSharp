@@ -13,7 +13,10 @@ namespace GraSnake
         private int wysokoscEkranu;
         private int rozmiarSiatki;
         private int punkty = 0;
-        private int szybkosc = 10;
+        // ruch węża kontrolowany przez timer niezależny od klatkażu
+        private float szybkosc = 10f;                // ruchów na sekundę
+        private float moveTimer = 0f;
+        private float moveInterval => 1f / szybkosc;
 
         public void Inicjalizuj()
         {
@@ -23,14 +26,26 @@ namespace GraSnake
             czyKoniecGry = false;
 
             Raylib.InitWindow(szerokoscEkranu, wysokoscEkranu, "Gra Waz");
-            Raylib.SetTargetFPS(szybkosc);
+            // utrzymujemy stały wysokie klatkaże, ruch węża sterowany timerem
+            Raylib.SetTargetFPS(60);
+            moveTimer = 0f;
 
             waz = new Waz(rozmiarSiatki, szerokoscEkranu, wysokoscEkranu);
             jedzenie = new Jedzenie(rozmiarSiatki, szerokoscEkranu, wysokoscEkranu);
         }
-
         public void Aktualizuj()
         {
+            // jeżeli gra zakończona, zatrzymujemy ruch i czekamy na Enter
+            if (czyKoniecGry)
+            {
+                if (Raylib.IsKeyPressed(KeyboardKey.Enter))
+                {
+                    UruchomPonownie();
+                }
+                return;
+            }
+
+            // kierunek można zmienić w każdej klatce niezależnie od ruchu
             if (Raylib.IsKeyPressed(KeyboardKey.Up))
                 waz.ZmienKierunek(new Vector2(0, -1));
             if (Raylib.IsKeyPressed(KeyboardKey.Down))
@@ -40,27 +55,30 @@ namespace GraSnake
             if (Raylib.IsKeyPressed(KeyboardKey.Right))
                 waz.ZmienKierunek(new Vector2(1, 0));
 
-
-            if (waz.SprawdzKolizje(jedzenie.getPozycja()))
+            // ruch węża co pewien odstęp czasu (bardziej płynne)
+            moveTimer += Raylib.GetFrameTime();
+            if (moveTimer >= moveInterval)
             {
-                // change on objects
-                waz.Rosnij();
-                jedzenie.GenerujNowaPozycje();
+                moveTimer -= moveInterval;
+                waz.Poruszaj();
 
-                // changes on gameplay
-                punkty++;
-                szybkosc = Math.Min(szybkosc++, 60);
-                Raylib.SetTargetFPS(szybkosc);
-            }
+                // sprawdzamy kolizje dopiero po przesunięciu
+                if (waz.SprawdzKolizje(jedzenie.Pozycja))
+                {
+                    waz.Rosnij();
+                    jedzenie.GenerujNowaPozycje();
 
-            waz.Poruszaj();
+                    // aktualizacja wyników i prędkości ruchu
+                    punkty++;
+                    szybkosc = Math.Min(szybkosc + 1f, 60f);
+                }
 
-            if (waz.SprawdzKolizjeZeSoba())
-            {
-                czyKoniecGry = true;
+                if (waz.SprawdzKolizjeZeSoba())
+                {
+                    czyKoniecGry = true;
+                }
             }
         }
-
         public void Rysuj()
         {
             Raylib.BeginDrawing();
@@ -85,6 +103,7 @@ namespace GraSnake
 
             while (!Raylib.WindowShouldClose())
             {
+
                 Aktualizuj();
                 Rysuj();
             }
@@ -94,12 +113,14 @@ namespace GraSnake
         public void UruchomPonownie()
         {
             punkty = 0;
-            szybkosc = 10;
+            szybkosc = 10f;
+            moveTimer = 0f;
             waz = new Waz(rozmiarSiatki, szerokoscEkranu, wysokoscEkranu);
             jedzenie = new Jedzenie(rozmiarSiatki, szerokoscEkranu, wysokoscEkranu);
             czyKoniecGry = false;
 
-            Raylib.SetTargetFPS(szybkosc);
+            // celowo FPS stałe, ruch kontrolowany timerem
+            Raylib.SetTargetFPS(60);
         }
     }
 }

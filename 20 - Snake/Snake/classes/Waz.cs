@@ -62,7 +62,6 @@ namespace GraSnake
 
             cialo[0] = zaktualizowanaGlowa;
         }
-
         
         public bool SprawdzKolizje(Vector2 pozycja)
         {
@@ -105,10 +104,14 @@ namespace GraSnake
 
         public void Rysuj()
         {
-            foreach (var segment in cialo)
+
+            Raylib.DrawRectangle((int)cialo[0].X, (int)cialo[0].Y, rozmiarSiatki, rozmiarSiatki, Color.White);
+
+            for (int i = 1; i < cialo.Count(); i++)
             {
-                Raylib.DrawRectangle((int)segment.X, (int)segment.Y, rozmiarSiatki, rozmiarSiatki, Color.Green);
+                Raylib.DrawRectangle((int)cialo[i].X, (int)cialo[i].Y, rozmiarSiatki, rozmiarSiatki, Color.Green);
             }
+            
         }
     }
 }
