@@ -11,6 +11,7 @@ namespace PingPongGame.Managers
         private static Paddle aiPaddle;
         private static Ball ball;
 
+        public static Ball Ball { get => ball; }
 
         public static void Initialize()
         {
@@ -45,7 +46,7 @@ namespace PingPongGame.Managers
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.Black);
 
-            playerPaddle.draw();
+            playerPaddle.Draw();
             aiPaddle.Draw();
             ball.Draw();
 

@@ -8,6 +8,6 @@
         public const int PADDLE_HEIGHT = 100;
         public const int BALL_SIZE = 20;
         public const float PADDLE_SPEED = 4.0f;
-        public const float BALL_SPEED = 6.0f;
+        public const float BALL_SPEED = 5.0f;
     }
 }
